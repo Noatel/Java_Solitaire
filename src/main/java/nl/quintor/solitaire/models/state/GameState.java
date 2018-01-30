@@ -24,6 +24,7 @@ import java.util.Map;
 public final class GameState {
     private final Deck waste = new Deck(DeckType.WASTE);
     private final Deck stock = new Deck(DeckType.STOCK);
+    private Deck defaultDeck = new Deck().createDefaultDeck();
     private final Map<String, Deck> stackPiles = new LinkedHashMap<>(); // entries of header and deck
     private final Map<String, Deck> columns = new LinkedHashMap<>(); // entries of header and deck
     private final List<RevertibleMove> moves = new ArrayList<>();

@@ -1,7 +1,6 @@
 package nl.quintor.solitaire.ui;
 
 import nl.quintor.solitaire.game.moves.Move;
-import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.state.GameState;
 
 
@@ -18,7 +17,9 @@ public class CMD implements UI {
     }
 
     public void refresh(GameState gameState) {
+        System.out.flush();
 
+        System.out.println(gameState.toString());
     }
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
