@@ -16,17 +16,17 @@ import java.util.List;
  */
 public class Main {
     /**
-     * Application entry point. Consists of three phases: initialization, game loop and game shutdown. During the
-     * initialization phase, the UI, game state and possible moves are created. The game loop is entered, which runs as
-     * long as the game is not over. The game loop essentially consists of:
+     *  Application entry point. Consists of three phases: initialization, game loop and game shutdown. During the
+     *  initialization phase, the UI, game state and possible moves are created. The game loop is entered, which runs as
+     *  long as the game is not over. The game loop essentially consists of:
      *
-     * <p><ul>
-     *     <li>visualize GameState object
-     *     <li>request input
-     *     <li>translate input into a Move
-     *     <li>apply the Move to the GameState object
-     *     <li>communicate the result to the player
-     * </ul></p>
+     *  <p><ul>
+     *      <li>visualize GameState object
+     *      <li>request input
+     *      <li>translate input into a Move
+     *      <li>apply the Move to the GameState object
+     *      <li>communicate the result to the player
+     *  </ul></p>
      *
      * When the game loop exits, the result of the game must be shown to the player and the UI is refreshed one final
      * time.
