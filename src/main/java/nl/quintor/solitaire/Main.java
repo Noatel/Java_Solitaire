@@ -3,6 +3,10 @@ package nl.quintor.solitaire;
 import nl.quintor.solitaire.game.moves.Move;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.game.moves.ex.MoveException;
+import nl.quintor.solitaire.models.card.Card;
+import nl.quintor.solitaire.models.card.Suit;
+import nl.quintor.solitaire.models.deck.Deck;
+import nl.quintor.solitaire.models.deck.DeckType;
 import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.ui.CMD;
 import nl.quintor.solitaire.ui.UI;
@@ -10,6 +14,7 @@ import nl.quintor.solitaire.ui.UI;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Collections;
 
 
 /**
@@ -40,6 +45,23 @@ public class Main {
         List<Move> moves = Arrays.asList(new Quit());
         HashMap<String, Move> possibleMoves = new HashMap<>();
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
+
+        Deck deck = new Deck().createDefaultDeck();
+
+        Collections.shuffle(deck);
+
+        System.out.println(deck.toString());
+
+        for (Card card : deck){
+            if (card.getSuit() == Suit.HEARTS){
+                Deck<Collection> hearts = new Deck<Collection>(DeckType.STACK);
+                hearts.add(card.getOrdinal(),card);
+
+                System.out.println(hearts.toString());
+            }
+        }
+
+
 
         // game loop
         /*while (!gameState.isGameOver()) {
