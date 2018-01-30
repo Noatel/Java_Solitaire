@@ -11,7 +11,11 @@ import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.ui.CMD;
 import nl.quintor.solitaire.ui.UI;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Collections;
+import java.util.Collection;
 
 
 /**
@@ -42,7 +46,7 @@ public class Main {
         List<Move> moves = Arrays.asList(new Quit());
         HashMap<String, Move> possibleMoves = new HashMap<>();
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
-
+        
         // game loop
         /*while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move
