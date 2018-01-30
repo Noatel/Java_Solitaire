@@ -32,33 +32,34 @@ public class Main {
      * time.
      */
     public static void main(String... args){
-        // initialize the GameState, UI and all possible moves
-        UI ui = null;
-        GameState gameState = new GameState();
-        List<String> keys = Arrays.asList("Q");
-        List<Move> moves = Arrays.asList(new Quit());
-        HashMap<String, Move> possibleMoves = new HashMap<>();
-        for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
-
-        // game loop
-        while (!gameState.isGameOver()) {
-            // show gamestate to the player and ask for next move
-            String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
-
-            Move move = possibleMoves
-                .getOrDefault(playerInput.substring(0,1), null)
-                .createInstance(playerInput);
-
-            try{
-                ui.setMessage(move.apply(gameState));
-            } catch (MoveException e){
-                ui.setErrorMessage(e.getMessage());
-            }
-        }
-
-        if (gameState.isGameWon()){
-            ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
-        }
-        ui.refresh(gameState);
+//        // initialize the GameState, UI and all possible moves
+//        UI ui = null;
+//        GameState gameState = new GameState();
+//        List<String> keys = Arrays.asList("Q");
+//        List<Move> moves = Arrays.asList(new Quit());
+//        HashMap<String, Move> possibleMoves = new HashMap<>();
+//        for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
+//
+//        // game loop
+//        while (!gameState.isGameOver()) {
+//            // show gamestate to the player and ask for next move
+//            String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
+//
+//            Move move = possibleMoves
+//                .getOrDefault(playerInput.substring(0,1), null)
+//                .createInstance(playerInput);
+//
+//            try{
+//                ui.setMessage(move.apply(gameState));
+//            } catch (MoveException e){
+//                ui.setErrorMessage(e.getMessage());
+//            }
+//        }
+//
+//        if (gameState.isGameWon()){
+//            ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
+//        }
+//        ui.refresh(gameState);
+        System.out.println("hello world");
     }
 }
