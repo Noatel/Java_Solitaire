@@ -9,16 +9,6 @@ import java.util.Collection;
 
 public class CMD implements UI {
 
-    // Initialize CMD UI
-    public CMD(){
-        // create field
-        GameState gameState = new GameState();
-
-        System.out.println("deck is:");
-        System.out.println(Deck.createDefaultDeck());
-
-    }
-
     public void setMessage(String message) {
 
     }
