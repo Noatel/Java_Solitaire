@@ -6,10 +6,7 @@ import nl.quintor.solitaire.models.deck.DeckType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class that holds the complete state of the game, consisting of 1 stock, 7 columns and 4 stacks of {@link Deck}s, and
@@ -24,7 +21,6 @@ import java.util.Map;
 public final class GameState {
     private final Deck waste = new Deck(DeckType.WASTE);
     private final Deck stock = new Deck(DeckType.STOCK);
-    private Deck defaultDeck = new Deck().createDefaultDeck();
     private final Map<String, Deck> stackPiles = new LinkedHashMap<>(); // entries of header and deck
     private final Map<String, Deck> columns = new LinkedHashMap<>(); // entries of header and deck
     private final List<RevertibleMove> moves = new ArrayList<>();
@@ -34,6 +30,21 @@ public final class GameState {
     private LocalDateTime startTime = LocalDateTime.now();
     private boolean gameLost = false;
     private boolean gameWon = false;
+
+    public GameState(){
+        // pupulate stock and shuffle it
+        stock.addAll(Deck.createDefaultDeck());
+        Collections.shuffle(stock);
+
+        // initialize columns
+        columns.put("1", new Deck(DeckType.COLUMN));
+        columns.put("2", new Deck(DeckType.COLUMN));
+        columns.put("3", new Deck(DeckType.COLUMN));
+        columns.put("4", new Deck(DeckType.COLUMN));
+        columns.put("5", new Deck(DeckType.COLUMN));
+        columns.put("6", new Deck(DeckType.COLUMN));
+        columns.put("7", new Deck(DeckType.COLUMN));
+    }
 
     /**
      * Getter for waste deck.

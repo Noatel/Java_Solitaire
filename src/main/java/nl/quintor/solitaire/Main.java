@@ -43,23 +43,6 @@ public class Main {
         HashMap<String, Move> possibleMoves = new HashMap<>();
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
 
-        Deck deck = new Deck().createDefaultDeck();
-
-        Collections.shuffle(deck);
-
-        System.out.println(deck.toString());
-
-        for (Card card : deck){
-            if (card.getSuit() == Suit.HEARTS){
-                Deck<Collection> hearts = new Deck<Collection>(DeckType.STACK);
-                hearts.add(card.getOrdinal(),card);
-
-                System.out.println(hearts.toString());
-            }
-        }
-
-
-
         // game loop
         /*while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move

@@ -1,7 +1,6 @@
 package nl.quintor.solitaire.ui;
 
 import nl.quintor.solitaire.game.moves.Move;
-import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.Main;
@@ -15,12 +14,6 @@ public class CMD implements UI {
 
     // Initialize CMD UI
     public CMD(){
-        clrscr();
-        // create field
-        GameState gameState = new GameState();
-
-        System.out.println("deck is:");
-        System.out.println(Deck.createDefaultDeck());
 
     }
 
@@ -33,7 +26,7 @@ public class CMD implements UI {
     }
 
     public void refresh(GameState gameState) {
-        System.out.flush();
+        clearScreen();
 
         System.out.println(gameState.toString());
 
@@ -72,7 +65,7 @@ public class CMD implements UI {
         }
     }
 
-        private static void clrscr(){
+        private static void clearScreen(){
             try {
                 if (System.getProperty("os.name").contains("Windows"))
                     new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
