@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
+import java.util.Collection;
 
 
 /**
@@ -51,16 +52,6 @@ public class Main {
         Collections.shuffle(deck);
 
         System.out.println(deck.toString());
-
-        for (Card card : deck){
-            if (card.getSuit() == Suit.HEARTS){
-                Deck<Collection> hearts = new Deck<Collection>(DeckType.STACK);
-                hearts.add(card.getOrdinal(),card);
-
-                System.out.println(hearts.toString());
-            }
-        }
-
 
 
         // game loop
