@@ -54,6 +54,7 @@ public class Main {
         System.out.println(deck.toString());
 
 
+
         // game loop
         /*while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move
