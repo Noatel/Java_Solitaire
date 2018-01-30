@@ -2,7 +2,7 @@
 'UTF-8'
 -private
 -sourcepath
-'/Users/NoahTelussa/IdeaProjects/java_solitaire/src/main/java'
+'/Users/NoahTelussa/IdeaProjects/java_solitaire/src/main/java:/Users/NoahTelussa/IdeaProjects/java_solitaire/target/generated-sources/annotations'
 -author
 -bottom
 'Copyright &#169; 2018. All rights reserved.'
