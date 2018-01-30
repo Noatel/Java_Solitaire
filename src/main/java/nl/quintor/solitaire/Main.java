@@ -4,6 +4,7 @@ import nl.quintor.solitaire.game.moves.Move;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.game.moves.ex.MoveException;
 import nl.quintor.solitaire.models.state.GameState;
+import nl.quintor.solitaire.ui.CMD;
 import nl.quintor.solitaire.ui.UI;
 
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class Main {
      */
     public static void main(String... args){
         // initialize the GameState, UI and all possible moves
-        UI ui = null;
+        UI ui = new CMD();
         GameState gameState = new GameState();
         List<String> keys = Arrays.asList("Q");
         List<Move> moves = Arrays.asList(new Quit());
@@ -41,7 +42,7 @@ public class Main {
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
 
         // game loop
-        while (!gameState.isGameOver()) {
+        /*while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move
             String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
 
@@ -58,7 +59,7 @@ public class Main {
 
         if (gameState.isGameWon()){
             ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
-        }
+        }*/
         ui.refresh(gameState);
     }
 }
