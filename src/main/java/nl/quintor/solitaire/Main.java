@@ -40,6 +40,10 @@ public class Main {
         HashMap<String, Move> possibleMoves = new HashMap<>();
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
 
+
+        System.out.println("gamestate");
+        System.out.println(gameState);
+
         // game loop
         while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move
