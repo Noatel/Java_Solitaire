@@ -1,0 +1,7 @@
+nl.quintor.solitaire
+nl.quintor.solitaire.game.moves
+nl.quintor.solitaire.game.moves.ex
+nl.quintor.solitaire.models.card
+nl.quintor.solitaire.models.deck
+nl.quintor.solitaire.models.state
+nl.quintor.solitaire.ui
