@@ -11,10 +11,7 @@ import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.ui.CMD;
 import nl.quintor.solitaire.ui.UI;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Collections;
+import java.util.*;
 
 
 /**
