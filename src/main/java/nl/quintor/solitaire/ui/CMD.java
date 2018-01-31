@@ -16,6 +16,10 @@ import java.util.Collection;
 
 public class CMD implements UI {
 
+    private Scanner scanner = new Scanner(System.in);
+    private String waste = "--";
+    private int numberDeck = 0;
+
     public void setMessage(String message) {
 
     }
@@ -24,91 +28,19 @@ public class CMD implements UI {
 
     }
 
+
     public void refresh(GameState gameState) {
         clearScreen();
-
-        //The first card in the waste is empty
-        String waste = "--";
-
-        //Run the default values like waste, collections
-        this.displayDefault(waste,gameState);
-
-        //zet het aantal keer dat de loop voor de vraag blijft lopen op 1
-        int totalTries = 1;
-        //Count how many cards there is on the stock
-        int numberDeck = 0;
-
-        //maak een nieuwe scanner voor het checken van de input
-        Scanner scanner = new Scanner(System.in);
-        //zet de standaard text neer
-
-
-        //de for loop blijft net zo lang loopen totdat er een valid answer is gegeven
-        for (int i = 0; i < totalTries; i++) {
-            char textInput = scanner.next().toLowerCase().charAt(0);
-            // To put a card to the waste and change the Deck
-            if (textInput == 'd') {
-
-                //When you want a card in the deck run the function
-                //Displaywaste() With the numberDeck (What card he is at in the stock)
-                waste = displayWaste(numberDeck,gameState);
-
-                i = 0;
-                numberDeck++;
-                totalTries++;
-
-                if(waste.equals("empty")){
-                    numberDeck = 0;
-                }
-
-                //After the function, clear screen
-                clearScreen();
-
-                //Run the default settings with the waste updated
-                displayDefault(waste,gameState);
-            //To quit the game
-            } else if (textInput == 'q') {
-                Quit quit = new Quit();
-                System.out.println(quit.apply(gameState));
-                quit.apply(gameState);
-                System.exit(0);
-
-            //To show the controls
-            } else if (textInput == 'h') {
-                displayControls();
-                totalTries++;
-            } else {
-                //voeg een extra try toe om nog een keer door de code heen te loopen
-                System.out.println("Please try a valid character");
-                textInput = scanner.next().charAt(0);
-
-                totalTries++;
-            }
-        }
-
+        displayHeader(gameState);
+        displayColumns(gameState);
+        displayControls();
     }
     private void displayControls(){
-        String controls = "D = Deck | H = Help | Q = Quit";
+        String controls = "M = move | D = Deck | H = Help | Q = Quit";
 
         System.out.println(controls);
     }
-    private void displayDefault(String waste,GameState gameState){
-        // display time, move, score
-//        System.out.println(gameState.toString());
 
-        // display waste
-//        System.out.print("Waste = ");
-//        System.out.println(waste);
-
-        // display header
-        displayHeader(gameState, waste);
-
-        // display columns
-        displayColumns(gameState);
-
-        // display controls
-        displayControls();
-    };
     private String displayWaste(int numberDeck,GameState gameState){
 
         System.out.println(gameState.getStock());
@@ -169,7 +101,7 @@ public class CMD implements UI {
         System.out.println();
     }
 
-    private void displayHeader(GameState gameState, String waste){
+    private void displayHeader(GameState gameState){
         int stockSize = gameState.getStock().size();
 
         System.out.println(gameState.toString());
@@ -180,18 +112,57 @@ public class CMD implements UI {
         System.out.println("\t \t \t -- \t -- \t -- \t --\n");
     }
 
-    private static void clearScreen(){
-            try {
-                if (System.getProperty("os.name").contains("Windows"))
-                    new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-                else
-                    System.out.print("\033\143");
-            } catch (IOException | InterruptedException ex) {
-                throw new RuntimeException("Screen clearing error");
-            }
-        }
-
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
+        refresh(gameState);
+        gameControls(gameState);
+
+
         return "test";
+    }
+
+    private void gameControls(GameState gameState){
+        String inputCommand = scanner.next().toLowerCase();
+
+        char commandType = inputCommand.charAt(0);
+
+        switch (commandType){
+            case 'd':
+                //Displaywaste() With the numberDeck (What card he is at in the stock)
+                waste = displayWaste(numberDeck,gameState);
+                numberDeck++;
+
+                if(waste.equals("--")){
+                    numberDeck = 0;
+                }
+            break;
+            case 'q':
+                Quit quit = new Quit();
+                System.out.println(quit.apply(gameState));
+                quit.apply(gameState);
+            break;
+            case 'm':
+                moveFunction();
+            break;
+
+            default:
+                System.out.println("Please try a valid command, press H for help.");
+                gameControls(gameState);
+            break;
+        }
+    }
+
+    void moveFunction (){
+
+    }
+
+    private static void clearScreen(){
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+                System.out.print("\033\143");
+        } catch (IOException | InterruptedException ex) {
+            throw new RuntimeException("Screen clearing error");
+        }
     }
 }
