@@ -33,12 +33,10 @@ public class CMD implements UI {
         //Run the default values like waste, collections
         this.displayDefault(waste,gameState);
 
-
         //zet het aantal keer dat de loop voor de vraag blijft lopen op 1
         int totalTries = 1;
         //Count how many cards there is on the stock
         int numberDeck = 0;
-        int emptyWaste = 0;
 
         //maak een nieuwe scanner voor het checken van de input
         Scanner scanner = new Scanner(System.in);
@@ -58,6 +56,10 @@ public class CMD implements UI {
                 i = 0;
                 numberDeck++;
                 totalTries++;
+
+                if(waste.equals("empty")){
+                    numberDeck = 0;
+                }
 
                 //After the function, clear screen
                 clearScreen();
@@ -109,11 +111,14 @@ public class CMD implements UI {
         System.out.println(gameState.getStock());
 
 
-        if((gameState.getStock().size() - 1) == numberDeck){
+        if(gameState.getStock().size() == numberDeck){
             // Empty the waste
-            numberDeck = 0;
+            return "empty";
         }
 
+        System.out.println(numberDeck);
+        System.out.println(gameState.getStock().size());
+        System.out.println((gameState.getStock().size() - 1));
         System.out.println(gameState.getStock());
         System.out.println(gameState.getStock().get(numberDeck).toShortString());
         System.out.println(gameState.getStock().get(numberDeck).toString());
