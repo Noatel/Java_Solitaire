@@ -119,9 +119,14 @@ public class CMD implements UI {
         System.out.println(gameState.toString());
 
         System.out.print("Stock: " + stockSize);
-        System.out.println("\t \t \t SA \t SB \t SC \t SD");
+        System.out.println("\t \t \t S1 \t S2 \t S3 \t S4");
         System.out.print("Waste: " + waste);
-        System.out.println("\t \t \t -- \t -- \t -- \t --\n");
+        System.out.print("\t \t \t ");
+
+        for (Deck stackPile : gameState.getStackPiles().values()){
+            Card cardOnTop = !stackPile.isEmpty() ? stackPile.get(0) : null;
+            System.out.print(String.format("%s \t", cardOnTop == null ? "--" : cardOnTop.toShortString()));
+        }
 
     }
 

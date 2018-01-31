@@ -42,6 +42,11 @@ public final class GameState {
             columns.put(Integer.toString(i), new Deck(DeckType.COLUMN));
             columns.get(Integer.toString(i)).addAll(getCardsFromDeck(stock, i));
         }
+
+        // initialize 4 stack piles
+        for (int i = 1; i <= 4; i++){
+            stackPiles.put(Integer.toString(i), new Deck(DeckType.STACK));
+        }
     }
 
     /**
