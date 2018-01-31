@@ -26,10 +26,7 @@ public class CMD implements UI {
         clearScreen();
 
         System.out.println(gameState.toString());
-
         System.out.println("1 \t 2 \t 3 \t 4 \t 5 \t 6 \t 7");
-
-
 
 
         //zet het aantal keer dat de loop voor de vraag blijft lopen op 1
@@ -40,17 +37,19 @@ public class CMD implements UI {
         String controls = "D = Deck | H = Help | Q = Quit";
         System.out.println(controls);
 
+        System.out.println(gameState);
+
+
         //de for loop blijft net zo lang loopen totdat er een valid answer is gegeven
         for (int i = 0; i < totalTries; i++) {
             char textInput = scanner.next().toLowerCase().charAt(0);
-
             // To show the deck?
             if (textInput == 'd') {
                 System.out.println("go fuck yourself");
                 i = 0;
-                textInput = 'N';
-                Main main = new Main();
+                totalTries = i;
 
+                Main main = new Main();
             //To quit the game
             } else if (textInput == 'q') {
                 Quit quit = new Quit();
@@ -60,11 +59,14 @@ public class CMD implements UI {
             //To show the controls
             } else if (textInput == 'h') {
                 System.out.println(controls);
+
+                totalTries++;
             } else {
                 //voeg een extra try toe om nog een keer door de code heen te loopen
-                totalTries++;
                 System.out.println("Please try a valid character");
                 textInput = scanner.next().charAt(0);
+
+                totalTries++;
             }
         }
 

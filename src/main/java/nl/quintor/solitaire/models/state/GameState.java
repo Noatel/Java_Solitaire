@@ -42,6 +42,7 @@ public final class GameState {
 
             // get i amount of cards from stock, remove those cards from stock and add to column
             for (int y = 1; y<=i; y++){
+
                 columns.get(Integer.toString(i)).add(stock.get(y));
                 stock.remove(y);
             }
