@@ -4,6 +4,7 @@ import nl.quintor.solitaire.game.moves.Move;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.game.moves.ex.MoveException;
 import nl.quintor.solitaire.models.card.Card;
+import nl.quintor.solitaire.models.card.Rank;
 import nl.quintor.solitaire.models.card.Suit;
 import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.deck.DeckType;
@@ -11,10 +12,7 @@ import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.ui.CMD;
 import nl.quintor.solitaire.ui.UI;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -45,18 +43,6 @@ public class Main {
         List<Move> moves = Arrays.asList(new Quit());
         HashMap<String, Move> possibleMoves = new HashMap<>();
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
-        Deck deck = new Deck(DeckType.STACK);
-
-        System.out.println(gameState.getStock() + "\n");
-
-        for (Card card : gameState.getStock()){
-            if (card.getSuit() == Suit.HEARTS){
-                deck.add(card);
-            }
-        }
-
-        System.out.println(deck.toString() + "\n");
-        System.out.println(gameState.getStackPiles().toString());
 
         // game loop
         /*while (!gameState.isGameOver()) {
