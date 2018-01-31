@@ -12,10 +12,9 @@ import nl.quintor.solitaire.ui.CMD;
 import nl.quintor.solitaire.ui.UI;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Collections;
-import java.util.Collection;
 
 
 /**
@@ -48,7 +47,7 @@ public class Main {
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
         Deck deck = new Deck(DeckType.STACK);
 
-        System.out.println(gameState.getStock());
+        System.out.println(gameState.getStock() + "\n");
 
         for (Card card : gameState.getStock()){
             if (card.getSuit() == Suit.HEARTS){
@@ -56,7 +55,7 @@ public class Main {
             }
         }
 
-//        System.out.println(deck.toString());
+        System.out.println(deck.toString() + "\n");
         System.out.println(gameState.getStackPiles().toString());
 
         // game loop
