@@ -27,8 +27,12 @@ public class CMD implements UI {
     public void refresh(GameState gameState) {
         clearScreen();
 
+        String waste = "empty";
+
         // display time, move, score
         System.out.println(gameState.toString());
+        System.out.print("Waste = ");
+        System.out.println(waste);
 
         // display columns
         displayColumns(gameState);
@@ -36,21 +40,44 @@ public class CMD implements UI {
 
         //zet het aantal keer dat de loop voor de vraag blijft lopen op 1
         int totalTries = 1;
+        //Count how many cards there is on the stock
+        int numberDeck = 0;
+        int emptyWaste = 0;
+
         //maak een nieuwe scanner voor het checken van de input
         Scanner scanner = new Scanner(System.in);
         //zet de standaard text neer
         String controls = "D = Deck | H = Help | Q = Quit";
-        System.out.println(controls);
 
+        System.out.println(controls);
 
         //de for loop blijft net zo lang loopen totdat er een valid answer is gegeven
         for (int i = 0; i < totalTries; i++) {
             char textInput = scanner.next().toLowerCase().charAt(0);
-            // To show the deck?
+            // To put a card to the waste and change the Deck
             if (textInput == 'd') {
-                System.out.println("go fuck yourself");
+                System.out.println(gameState.getStock());
+
+
+
+                if((gameState.getStock().size() - 1) == numberDeck){
+                    System.out.println(gameState.getStock().size());
+
+                    // Empty the waste
+                    emptyWaste = 1;
+                    numberDeck = 0;
+                }
+
+                if(emptyWaste == 1){
+                    waste = "empty";
+                } else {
+                    System.out.println(gameState.getStock().get(numberDeck));
+                }
+
+
                 i = 0;
-                totalTries = i;
+                numberDeck++;
+                totalTries++;
 
                 Main main = new Main();
             //To quit the game
