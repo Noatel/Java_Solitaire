@@ -66,7 +66,8 @@ public class Main {
 
         if (gameState.isGameWon()){
             ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
-        }*/
+        }
+        */
         //ui.refresh(gameState);
         ui.refresh(gameState);
     }

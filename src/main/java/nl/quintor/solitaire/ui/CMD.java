@@ -19,6 +19,7 @@ public class CMD implements UI {
     private Scanner scanner = new Scanner(System.in);
     private String waste = "--";
     private int numberDeck = 0;
+    private String info = "";
 
     public void setMessage(String message) {
 
@@ -34,6 +35,7 @@ public class CMD implements UI {
         displayHeader(gameState);
         displayColumns(gameState);
         displayControls();
+        System.out.println(info);
     }
 
     private void displayControls() {
@@ -91,8 +93,12 @@ public class CMD implements UI {
         System.out.println();
     }
 
-    private void displayHelp(){
-        System.out.println("asdf");
+    private void displayHelp() {
+        info = "\nHow do i move a Card \n" +
+               "If you want to move a card, first you need to enter the m to move a card\n" +
+               "After you enter the M into the commandline you need to select a card that you want to move \n" +
+               "";
+
     }
 
     private void displayHeader(GameState gameState) {
@@ -105,7 +111,7 @@ public class CMD implements UI {
             //reset the deck
             numberDeck = 0;
         }
-        
+
 
         System.out.println(gameState.toString());
 
@@ -125,6 +131,7 @@ public class CMD implements UI {
 
     private void gameControls(GameState gameState) {
         String inputCommand = scanner.next().toLowerCase();
+        info = "";
 
         char commandType = inputCommand.charAt(0);
 
@@ -148,9 +155,6 @@ public class CMD implements UI {
                 break;
             case 'h':
                 displayHelp();
-
-
-
                 break;
 
             default:
@@ -163,6 +167,7 @@ public class CMD implements UI {
     void moveFunction() {
 
     }
+
 
     private static void clearScreen() {
         try {
