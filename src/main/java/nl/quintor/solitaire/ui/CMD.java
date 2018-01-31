@@ -28,7 +28,7 @@ public class CMD implements UI {
         clearScreen();
 
         //The first card in the waste is empty
-        String waste = "empty";
+        String waste = "--";
 
         //Run the default values like waste, collections
         this.displayDefault(waste,gameState);
@@ -94,11 +94,14 @@ public class CMD implements UI {
     }
     private void displayDefault(String waste,GameState gameState){
         // display time, move, score
-        System.out.println(gameState.toString());
+//        System.out.println(gameState.toString());
 
         // display waste
-        System.out.print("Waste = ");
-        System.out.println(waste);
+//        System.out.print("Waste = ");
+//        System.out.println(waste);
+
+        // display header
+        displayHeader(gameState, waste);
 
         // display columns
         displayColumns(gameState);
@@ -164,6 +167,17 @@ public class CMD implements UI {
             System.out.println();
         }
         System.out.println();
+    }
+
+    private void displayHeader(GameState gameState, String waste){
+        int stockSize = gameState.getStock().size();
+
+        System.out.println(gameState.toString());
+
+        System.out.print("Stock: " + stockSize);
+        System.out.println("\t \t \t SA \t SB \t SC \t SD");
+        System.out.print("Waste: " + waste);
+        System.out.println("\t \t \t -- \t -- \t -- \t --\n");
     }
 
     private static void clearScreen(){
