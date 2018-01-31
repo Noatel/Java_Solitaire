@@ -40,7 +40,7 @@ public final class GameState {
         // initialize 7 columns
         for (int i = 1; i <= 7; i++){
             columns.put(Integer.toString(i), new Deck(DeckType.COLUMN));
-            columns.get(Integer.toString(i)).addAll(getCardsFromStock(i));
+            columns.get(Integer.toString(i)).addAll(getCardsFromDeck(stock, i));
         }
     }
 
@@ -99,16 +99,16 @@ public final class GameState {
     }
 
     /**
-     * Gets x amount of cards from stock and removes those cards from the stock
+     * Gets x amount of cards from a specific deck and removes those cards from the deck
      *
-     * @param amount number of cards to retrieve from stock
-     * @return Arraylist of Cards gotten from stock
+     * @param amount number of cards to retrieve from deck
+     * @return Arraylist of Cards gotten from deck
      */
-    public ArrayList<Card> getCardsFromStock(int amount){
+    public ArrayList<Card> getCardsFromDeck(Deck deck, int amount){
         ArrayList<Card> cards = new ArrayList<>();
 
         for (int i = 0; i <= amount - 1; i++){
-            cards.add(stock.get(i));
+            cards.add(deck.get(i));
             stock.remove(i);
         }
 
