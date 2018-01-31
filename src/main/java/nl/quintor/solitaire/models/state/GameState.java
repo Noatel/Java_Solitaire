@@ -113,8 +113,10 @@ public final class GameState {
         ArrayList<Card> cards = new ArrayList<>();
 
         for (int i = 0; i <= amount - 1; i++){
-            cards.add(deck.get(i));
-            stock.remove(i);
+            if (!deck.isEmpty()){
+                cards.add(deck.get(0));
+                deck.remove(0);
+            }
         }
 
         return cards;

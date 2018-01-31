@@ -20,16 +20,14 @@ import java.util.regex.Pattern;
 public class CMD implements UI {
 
     private Scanner scanner = new Scanner(System.in);
-    private String waste = "--";
-    private int numberDeck = 0;
     private String info = "";
 
     public void setMessage(String message) {
-
+        System.out.println(message);
     }
 
     public void setErrorMessage(String message) {
-
+        System.out.println(message.toUpperCase());
     }
 
 
@@ -47,16 +45,6 @@ public class CMD implements UI {
         System.out.println(controls);
     }
 
-    private String displayWaste(int numberDeck, GameState gameState) {
-
-        if (gameState.getStock().size() == numberDeck) {
-            // Empty the waste
-            return "empty";
-        }
-
-        return gameState.getStock().get(numberDeck).toShortString();
-    }
-
     private void displayColumns(GameState gameState) {
         System.out.println();
         System.out.println("\tC1 \tC2 \tC3 \tC4 \tC5 \tC6 \tC7");
@@ -69,28 +57,23 @@ public class CMD implements UI {
             System.out.print("R" + i);
 
             // iterate through columns
-            for (int y = 1; y <= gameState.getColumns().size(); y++) {
-                Deck selectedColumn = gameState.getColumns().get(Integer.toString(y));
-                Card selectedCard = null;
-
-                // if card exists in column, get it
-                if (i <= selectedColumn.size()) {
-                    selectedCard = selectedColumn.get(i - 1);
-                }
+            for (Deck column : gameState.getColumns().values()){
 
                 // if card is last card in column, display card as visible otherwise invisible
-                if (selectedCard != null) {
-                    if (!selectedCard.equals(selectedColumn.get(selectedColumn.size() - 1))) {
+                if (i <= column.size()){
+                    Card selectedCard = column.get(i - 1);
+
+                    if (!selectedCard.equals(column.get(column.size() - 1))) {
                         System.out.print(" \t??");
                     } else {
                         System.out.print(String.format("\t%s", selectedCard.toShortString()));
                     }
-                } else {
+                }
+                else {
                     // card was not found in oolumn, display just a tab
                     System.out.print("\t");
                 }
             }
-
             System.out.println();
         }
         System.out.println();
@@ -105,22 +88,13 @@ public class CMD implements UI {
     }
 
     private void displayHeader(GameState gameState) {
-        int stockSize = gameState.getStock().size();
-
-        //If the numberdeck is lower than the deck
-        if (numberDeck < 25) {
-            stockSize = gameState.getStock().size() - numberDeck;
-        } else {
-            //reset the deck
-            numberDeck = 0;
-        }
-
-
         System.out.println(gameState.toString());
 
-        System.out.print("Stock: " + stockSize);
+        System.out.print("Stock: " + gameState.getStock().size());
         System.out.println("\t \t \t S1 \t S2 \t S3 \t S4");
-        System.out.print("Waste: " + waste);
+
+        Deck waste = gameState.getWaste();
+        System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size()-1).toShortString()));
         System.out.print("\t \t \t ");
 
         for (Deck stackPile : gameState.getStackPiles().values()){
@@ -138,18 +112,18 @@ public class CMD implements UI {
     }
     private void gameControls(GameState gameState) {
         String inputCommand = scanner.nextLine().toLowerCase();
-        info = "";
 
         char commandType = inputCommand.charAt(0);
 
         switch (commandType) {
             case 'd':
-                //Displaywaste() With the numberDeck (What card he is at in the stock)
-                waste = displayWaste(numberDeck, gameState);
-                numberDeck++;
-
-                if (waste.equals("--")) {
-                    numberDeck = 0;
+                // if stock is empty, put waste back in stock
+                if (gameState.getStock().isEmpty()){
+                    gameState.getStock().addAll(gameState.getCardsFromDeck(gameState.getWaste(), gameState.getWaste().size()));
+                }
+                else {
+                    // add card from stock to waste
+                    gameState.getWaste().addAll(gameState.getCardsFromDeck(gameState.getStock(), 1));
                 }
             break;
 
@@ -174,10 +148,14 @@ public class CMD implements UI {
         }
     }
     void moveFunction (GameState gameState, String input){
-        // m <COLUMN>-<ROW> to <TARGETCOLUMN>
+        this.setMessage("From:");
+        String from = scanner.nextLine().toLowerCase();
 
+        switch (from.charAt(0)){
+            case 'w':
+
+        }
     }
-
 
     private static void clearScreen() {
         try {
