@@ -36,7 +36,7 @@ public class CMD implements UI {
         displayControls();
     }
     private void displayControls(){
-        String controls = "M = move | D = Deck | H = Help | Q = Quit";
+        String controls = "M = Move | D = Draw | H = Help | Q = Quit";
 
         System.out.println(controls);
     }
