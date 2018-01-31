@@ -53,9 +53,9 @@ public class CMD implements UI {
 
         //de for loop blijft net zo lang loopen totdat er een valid answer is gegeven
         for (int i = 0; i < totalTries; i++) {
-            char textInput = scanner.next().toLowerCase().charAt(0);
+            String textInput = scanner.next().toLowerCase();
             // To put a card to the waste and change the Deck
-            if (textInput == 'd') {
+            if (textInput.equals("d")) {
                 System.out.println(gameState.getStock());
 
 
@@ -81,20 +81,20 @@ public class CMD implements UI {
 
                 Main main = new Main();
             //To quit the game
-            } else if (textInput == 'q') {
+            } else if (textInput.equals("q")) {
                 Quit quit = new Quit();
                 System.out.println(quit.apply(gameState));
                 quit.apply(gameState);
 
             //To show the controls
-            } else if (textInput == 'h') {
+            } else if (textInput.equals("h")) {
                 System.out.println(controls);
 
                 totalTries++;
             } else {
                 //voeg een extra try toe om nog een keer door de code heen te loopen
                 System.out.println("Please try a valid character");
-                textInput = scanner.next().charAt(0);
+                textInput = scanner.next();
 
                 totalTries++;
             }
@@ -103,10 +103,16 @@ public class CMD implements UI {
     }
 
     private void displayColumns(GameState gameState) {
-        System.out.println("1 \t 2 \t 3 \t 4 \t 5 \t 6 \t 7");
+        System.out.println();
+        System.out.println("\tC1 \tC2 \tC3 \tC4 \tC5 \tC6 \tC7");
 
         // iterate through all rows
-        for (int i = 1; i <= gameState.getColumns().size(); i++){
+        int maxRows = 13;
+
+        for (int i = 1; i <= maxRows; i++){
+            // display rows
+            System.out.print("R"+i);
+
             // iterate through columns
             for (int y = 1; y <= gameState.getColumns().size(); y++){
                 Deck selectedColumn = gameState.getColumns().get(Integer.toString(y));
@@ -120,9 +126,9 @@ public class CMD implements UI {
                 // if card is last card in column, display card as visible otherwise invisible
                 if (selectedCard != null){
                     if (!selectedCard.equals(selectedColumn.get(selectedColumn.size() -1))){
-                        System.out.print("?? \t");
+                        System.out.print(" \t??");
                     } else  {
-                        System.out.print(String.format("%s \t", selectedCard.toShortString()));
+                        System.out.print(String.format("\t%s", selectedCard.toShortString()));
                     }
                 }
                 else {
@@ -133,6 +139,7 @@ public class CMD implements UI {
 
             System.out.println();
         }
+        System.out.println();
     }
 
     private static void clearScreen(){
