@@ -43,20 +43,10 @@ public class CMD implements UI {
 
     private String displayWaste(int numberDeck,GameState gameState){
 
-        System.out.println(gameState.getStock());
-
-
         if(gameState.getStock().size() == numberDeck){
             // Empty the waste
             return "empty";
         }
-
-        System.out.println(numberDeck);
-        System.out.println(gameState.getStock().size());
-        System.out.println((gameState.getStock().size() - 1));
-        System.out.println(gameState.getStock());
-        System.out.println(gameState.getStock().get(numberDeck).toShortString());
-        System.out.println(gameState.getStock().get(numberDeck).toString());
 
        return gameState.getStock().get(numberDeck).toShortString();
     }
@@ -115,7 +105,6 @@ public class CMD implements UI {
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
         refresh(gameState);
         gameControls(gameState);
-
 
         return "test";
     }
