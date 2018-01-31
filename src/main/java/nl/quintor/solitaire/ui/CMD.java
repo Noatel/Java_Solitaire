@@ -6,6 +6,8 @@ import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.Main;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 import java.lang.*;
@@ -25,8 +27,11 @@ public class CMD implements UI {
     public void refresh(GameState gameState) {
         clearScreen();
 
+        // display time, move, score
         System.out.println(gameState.toString());
-        System.out.println("1 \t 2 \t 3 \t 4 \t 5 \t 6 \t 7");
+
+        // display columns
+        displayColumns(gameState);
 
 
         //zet het aantal keer dat de loop voor de vraag blijft lopen op 1
@@ -36,8 +41,6 @@ public class CMD implements UI {
         //zet de standaard text neer
         String controls = "D = Deck | H = Help | Q = Quit";
         System.out.println(controls);
-
-        System.out.println(gameState);
 
 
         //de for loop blijft net zo lang loopen totdat er een valid answer is gegeven
@@ -72,7 +75,40 @@ public class CMD implements UI {
 
     }
 
-        private static void clearScreen(){
+    private void displayColumns(GameState gameState) {
+        System.out.println("1 \t 2 \t 3 \t 4 \t 5 \t 6 \t 7");
+
+        // iterate through all rows
+        for (int i = 1; i <= gameState.getColumns().size(); i++){
+            // iterate through columns
+            for (int y = 1; y <= gameState.getColumns().size(); y++){
+                Deck selectedColumn = gameState.getColumns().get(Integer.toString(y));
+                Card selectedCard = null;
+
+                // if card exists in column, get it
+                if (i <= selectedColumn.size()){
+                    selectedCard = selectedColumn.get(i -1);
+                }
+
+                // if card is last card in column, display card as visible otherwise invisible
+                if (selectedCard != null){
+                    if (!selectedCard.equals(selectedColumn.get(selectedColumn.size() -1))){
+                        System.out.print("?? \t");
+                    } else  {
+                        System.out.print(String.format("%s \t", selectedCard.toShortString()));
+                    }
+                }
+                else {
+                    // card was not found in oolumn, display just a tab
+                    System.out.print("\t");
+                }
+            }
+
+            System.out.println();
+        }
+    }
+
+    private static void clearScreen(){
             try {
                 if (System.getProperty("os.name").contains("Windows"))
                     new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
