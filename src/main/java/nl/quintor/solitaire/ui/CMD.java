@@ -1,6 +1,8 @@
 package nl.quintor.solitaire.ui;
 
 import nl.quintor.solitaire.game.moves.Move;
+import nl.quintor.solitaire.models.card.Card;
+import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.Main;
@@ -11,11 +13,6 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class CMD implements UI {
-
-    // Initialize CMD UI
-    public CMD(){
-
-    }
 
     public void setMessage(String message) {
 
@@ -29,6 +26,9 @@ public class CMD implements UI {
         clearScreen();
 
         System.out.println(gameState.toString());
+
+        System.out.println("1 \t 2 \t 3 \t 4 \t 5 \t 6 \t 7");
+
 
 
         //zet het aantal keer dat de loop voor de vraag blijft lopen op 1

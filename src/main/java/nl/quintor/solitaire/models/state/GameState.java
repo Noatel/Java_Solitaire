@@ -36,14 +36,16 @@ public final class GameState {
         stock.addAll(Deck.createDefaultDeck());
         Collections.shuffle(stock);
 
-        // initialize columns
-        columns.put("1", new Deck(DeckType.COLUMN));
-        columns.put("2", new Deck(DeckType.COLUMN));
-        columns.put("3", new Deck(DeckType.COLUMN));
-        columns.put("4", new Deck(DeckType.COLUMN));
-        columns.put("5", new Deck(DeckType.COLUMN));
-        columns.put("6", new Deck(DeckType.COLUMN));
-        columns.put("7", new Deck(DeckType.COLUMN));
+        // initialize 7 columns
+        for (int i = 1; i <= 7; i++){
+            columns.put(Integer.toString(i), new Deck(DeckType.COLUMN));
+
+            // get i amount of cards from stock, remove those cards from stock and add to column
+            for (int y = 1; y<=i; y++){
+                columns.get(Integer.toString(i)).add(stock.get(y));
+                stock.remove(y);
+            }
+        }
     }
 
     /**
