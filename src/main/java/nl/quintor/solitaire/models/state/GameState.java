@@ -1,15 +1,13 @@
 package nl.quintor.solitaire.models.state;
 
 import nl.quintor.solitaire.game.moves.RevertibleMove;
+import nl.quintor.solitaire.models.card.Card;
 import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.deck.DeckType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class that holds the complete state of the game, consisting of 1 stock, 7 columns and 4 stacks of {@link Deck}s, and
@@ -33,6 +31,18 @@ public final class GameState {
     private LocalDateTime startTime = LocalDateTime.now();
     private boolean gameLost = false;
     private boolean gameWon = false;
+
+    public GameState(){
+        // pupulate stock and shuffle it
+        stock.addAll(Deck.createDefaultDeck());
+        Collections.shuffle(stock);
+
+        // initialize 7 columns
+        for (int i = 1; i <= 7; i++){
+            columns.put(Integer.toString(i), new Deck(DeckType.COLUMN));
+            columns.get(Integer.toString(i)).addAll(getCardsFromStock(i));
+        }
+    }
 
     /**
      * Getter for waste deck.
@@ -86,6 +96,23 @@ public final class GameState {
      */
     public int getStockCycles() {
         return stockCycles;
+    }
+
+    /**
+     * Gets x amount of cards from stock and removes those cards from the stock
+     *
+     * @param amount number of cards to retrieve from stock
+     * @return Arraylist of Cards gotten from stock
+     */
+    public ArrayList<Card> getCardsFromStock(int amount){
+        ArrayList<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i <= amount - 1; i++){
+            cards.add(stock.get(i));
+            stock.remove(i);
+        }
+
+        return cards;
     }
 
     /**
