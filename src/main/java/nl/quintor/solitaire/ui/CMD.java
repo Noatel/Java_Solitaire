@@ -71,11 +71,11 @@ public class CMD implements UI {
                 Quit quit = new Quit();
                 System.out.println(quit.apply(gameState));
                 quit.apply(gameState);
+                System.exit(0);
 
             //To show the controls
             } else if (textInput == 'h') {
                 displayControls();
-
                 totalTries++;
             } else {
                 //voeg een extra try toe om nog een keer door de code heen te loopen
