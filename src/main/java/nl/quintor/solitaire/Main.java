@@ -39,8 +39,7 @@ public class Main {
      */
     public static void main(String... args){
         // initialize the GameState, UI and all possible moves
-        //UI ui = new CMD();
-        CMD cmd = new CMD();
+        UI ui = new CMD();
         GameState gameState = new GameState();
         List<String> keys = Arrays.asList("Q");
         List<Move> moves = Arrays.asList(new Quit());
@@ -48,6 +47,10 @@ public class Main {
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
 
         // game loop
+
+        while (!gameState.isGameOver()){
+            String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
+        }
         /*while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move
             String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
@@ -67,6 +70,6 @@ public class Main {
             ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
         }*/
         //ui.refresh(gameState);
-        cmd.gameControls();
+        ui.refresh(gameState);
     }
 }
