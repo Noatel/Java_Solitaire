@@ -1,6 +1,7 @@
 package nl.quintor.solitaire.models.state;
 
 import nl.quintor.solitaire.game.moves.RevertibleMove;
+import nl.quintor.solitaire.models.card.Card;
 import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.deck.DeckType;
 
@@ -39,12 +40,7 @@ public final class GameState {
         // initialize 7 columns
         for (int i = 1; i <= 7; i++){
             columns.put(Integer.toString(i), new Deck(DeckType.COLUMN));
-
-            // get i amount of cards from stock, remove those cards from stock and add to column
-            for (int y = 1; y<=i; y++){
-                columns.get(Integer.toString(i)).add(stock.get(y));
-                stock.remove(y);
-            }
+            columns.get(Integer.toString(i)).addAll(getCardsFromStock(i));
         }
     }
 
@@ -100,6 +96,23 @@ public final class GameState {
      */
     public int getStockCycles() {
         return stockCycles;
+    }
+
+    /**
+     * Gets x amount of cards from stock and removes those cards from the stock
+     *
+     * @param amount number of cards to retrieve from stock
+     * @return Arraylist of Cards gotten from stock
+     */
+    public ArrayList<Card> getCardsFromStock(int amount){
+        ArrayList<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i <= amount - 1; i++){
+            cards.add(stock.get(i));
+            stock.remove(i);
+        }
+
+        return cards;
     }
 
     /**
