@@ -53,7 +53,7 @@ public class CMD implements UI {
 
                 //When you want a card in the deck run the function
                 //Displaywaste() With the numberDeck (What card he is at in the stock)
-                waste = displayWaste(numberDeck);
+                waste = displayWaste(numberDeck,gameState);
 
                 i = 0;
                 numberDeck++;
@@ -104,8 +104,8 @@ public class CMD implements UI {
         // display controls
         displayControls();
     };
-    private String displayWaste(int numberDeck){
-        GameState gameState = new GameState();
+    private String displayWaste(int numberDeck,GameState gameState){
+
         System.out.println(gameState.getStock());
 
 
@@ -114,9 +114,11 @@ public class CMD implements UI {
             numberDeck = 0;
         }
 
-       return gameState.getStock().get(numberDeck).toShortString();
+        System.out.println(gameState.getStock());
+        System.out.println(gameState.getStock().get(numberDeck).toShortString());
+        System.out.println(gameState.getStock().get(numberDeck).toString());
 
-        //  Main main = new Main();
+       return gameState.getStock().get(numberDeck).toShortString();
     }
 
     private void displayColumns(GameState gameState) {
