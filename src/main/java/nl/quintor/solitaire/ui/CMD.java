@@ -8,11 +8,14 @@ import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.Main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.IOException;
 import java.lang.*;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CMD implements UI {
 
@@ -121,7 +124,7 @@ public class CMD implements UI {
     }
 
     private void gameControls(GameState gameState){
-        String inputCommand = scanner.next().toLowerCase();
+        String inputCommand = scanner.nextLine().toLowerCase();
 
         char commandType = inputCommand.charAt(0);
 
@@ -141,7 +144,7 @@ public class CMD implements UI {
                 quit.apply(gameState);
             break;
             case 'm':
-                moveFunction();
+                moveFunction(gameState, inputCommand);
             break;
 
             default:
@@ -151,7 +154,8 @@ public class CMD implements UI {
         }
     }
 
-    void moveFunction (){
+    void moveFunction (GameState gameState, String input){
+        // m <COLUMN>-<ROW> to <TARGETCOLUMN>
 
     }
 
