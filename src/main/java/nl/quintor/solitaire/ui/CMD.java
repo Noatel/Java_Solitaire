@@ -91,6 +91,10 @@ public class CMD implements UI {
         System.out.println();
     }
 
+    private void displayHelp(){
+        System.out.println("asdf");
+    }
+
     private void displayHeader(GameState gameState) {
         int stockSize = gameState.getStock().size();
 
@@ -101,6 +105,7 @@ public class CMD implements UI {
             //reset the deck
             numberDeck = 0;
         }
+        
 
         System.out.println(gameState.toString());
 
@@ -140,6 +145,12 @@ public class CMD implements UI {
                 break;
             case 'm':
                 moveFunction();
+                break;
+            case 'h':
+                displayHelp();
+
+
+
                 break;
 
             default:
