@@ -6,7 +6,7 @@ import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.Main;
 import java.util.Scanner;
 import java.io.IOException;
-
+import java.lang.*;
 
 import java.util.Collection;
 
@@ -39,10 +39,11 @@ public class CMD implements UI {
         //zet de standaard text neer
         String controls = "D = Deck | H = Help | Q = Quit";
         System.out.println(controls);
-        char textInput = scanner.next().toLowerCase().charAt(0);
 
         //de for loop blijft net zo lang loopen totdat er een valid answer is gegeven
         for (int i = 0; i < totalTries; i++) {
+            char textInput = scanner.next().toLowerCase().charAt(0);
+
             // To show the deck?
             if (textInput == 'd') {
                 System.out.println("go fuck yourself");
@@ -66,6 +67,7 @@ public class CMD implements UI {
                 textInput = scanner.next().charAt(0);
             }
         }
+
     }
 
         private static void clearScreen(){
