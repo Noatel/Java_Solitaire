@@ -39,7 +39,8 @@ public class Main {
      */
     public static void main(String... args){
         // initialize the GameState, UI and all possible moves
-        UI ui = new CMD();
+        //UI ui = new CMD();
+        CMD cmd = new CMD();
         GameState gameState = new GameState();
         List<String> keys = Arrays.asList("Q");
         List<Move> moves = Arrays.asList(new Quit());
@@ -65,6 +66,7 @@ public class Main {
         if (gameState.isGameWon()){
             ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
         }*/
-        ui.refresh(gameState);
+        //ui.refresh(gameState);
+        cmd.gameControls();
     }
 }
