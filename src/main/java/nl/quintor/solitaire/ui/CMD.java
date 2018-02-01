@@ -2,7 +2,10 @@ package nl.quintor.solitaire.ui;
 
 import nl.quintor.solitaire.game.moves.Move;
 import nl.quintor.solitaire.models.card.Card;
+import nl.quintor.solitaire.models.card.Rank;
+import nl.quintor.solitaire.models.card.Suit;
 import nl.quintor.solitaire.models.deck.Deck;
+import nl.quintor.solitaire.models.deck.DeckType;
 import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.Main;
@@ -94,15 +97,46 @@ public class CMD implements UI {
     }
 
     private void displayHelp() {
-        info = "\nHow do i move a Card \n" +
-               "If you want to move a card, first you need to enter the m to move a card\n" +
-               "After you enter the M into the commandline you need to select a card that you want to move \n" +
-               "";
-
+        System.out.println("asdf");
     }
 
     private void displayHeader(GameState gameState) {
         int stockSize = gameState.getStock().size();
+
+        // creates stackdeck
+        Deck stackHearts = new Deck(DeckType.STACK);
+        Deck stackSpades = new Deck(DeckType.STACK);
+        Deck stackDiamonds = new Deck(DeckType.STACK);
+        Deck stackClubs = new Deck(DeckType.STACK);
+
+        // creates ace card
+        Card HA = new Card(Suit.HEARTS, Rank.ACE);
+        Card SA = new Card(Suit.SPADES, Rank.ACE);
+        Card DA = new Card(Suit.DIAMONDS, Rank.ACE);
+        Card CA = new Card(Suit.CLUBS, Rank.ACE);
+
+        // add card to deck
+        stackHearts.add(HA);
+        stackSpades.add(SA);
+        stackDiamonds.add(DA);
+        stackClubs.add(CA);
+
+        String SH = "SH";
+        String SS = "SS";
+        String SD = "SD";
+        String SC = "SC";
+
+        // add deck to stack
+        gameState.getStackPiles().put(SH, stackHearts);
+        gameState.getStackPiles().put(SS, stackSpades);
+        gameState.getStackPiles().put(SD, stackDiamonds);
+        gameState.getStackPiles().put(SC, stackClubs);
+
+        // display stack
+        String getHearts = gameState.getStackPiles().get(SH).toString();
+        String getSpades = gameState.getStackPiles().get(SS).toString();
+        String getDiamonds = gameState.getStackPiles().get(SD).toString();
+        String getClubs = gameState.getStackPiles().get(SC).toString();
 
         //If the numberdeck is lower than the deck
         if (numberDeck < 25) {
@@ -112,14 +146,12 @@ public class CMD implements UI {
             numberDeck = 0;
         }
 
-
         System.out.println(gameState.toString());
 
         System.out.print("Stock: " + stockSize);
-        System.out.println("\t \t \t SA \t SB \t SC \t SD");
+        System.out.println("\t \t \t S A \t S B \t S C \t S D");
         System.out.print("Waste: " + waste);
-        System.out.println("\t \t \t -- \t -- \t -- \t --\n");
-
+        System.out.println("\t \t \t" + getHearts + "\t" + getSpades + "\t" + getDiamonds + "\t" + getClubs + "\n");
     }
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
