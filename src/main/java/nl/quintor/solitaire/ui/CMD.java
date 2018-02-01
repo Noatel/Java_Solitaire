@@ -103,16 +103,19 @@ public class CMD implements UI {
     private void displayHeader(GameState gameState) {
         int stockSize = gameState.getStock().size();
 
+        // creates stackdeck
         Deck stackHearts = new Deck(DeckType.STACK);
         Deck stackSpades = new Deck(DeckType.STACK);
         Deck stackDiamonds = new Deck(DeckType.STACK);
         Deck stackClubs = new Deck(DeckType.STACK);
 
+        // creates ace card
         Card HA = new Card(Suit.HEARTS, Rank.ACE);
         Card SA = new Card(Suit.SPADES, Rank.ACE);
         Card DA = new Card(Suit.DIAMONDS, Rank.ACE);
         Card CA = new Card(Suit.CLUBS, Rank.ACE);
 
+        // add card to deck
         stackHearts.add(HA);
         stackSpades.add(SA);
         stackDiamonds.add(DA);
@@ -123,11 +126,13 @@ public class CMD implements UI {
         String SD = "SD";
         String SC = "SC";
 
+        // add deck to stack
         gameState.getStackPiles().put(SH, stackHearts);
         gameState.getStackPiles().put(SS, stackSpades);
         gameState.getStackPiles().put(SD, stackDiamonds);
         gameState.getStackPiles().put(SC, stackClubs);
 
+        // display stack
         String getHearts = gameState.getStackPiles().get(SH).toString();
         String getSpades = gameState.getStackPiles().get(SS).toString();
         String getDiamonds = gameState.getStackPiles().get(SD).toString();
@@ -147,9 +152,6 @@ public class CMD implements UI {
         System.out.println("\t \t \t S A \t S B \t S C \t S D");
         System.out.print("Waste: " + waste);
         System.out.println("\t \t \t" + getHearts + "\t" + getSpades + "\t" + getDiamonds + "\t" + getClubs + "\n");
-
-//        System.out.println(gameState.getStackPiles().toString());
-//        System.out.println(gameState.getStackPiles().get("StackHeart"));
     }
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
