@@ -173,7 +173,7 @@ public class CMD implements UI {
         String toDeckInput = scanner.nextLine().toLowerCase();
         Deck toDeck = getDeckByInput(gameState, toDeckInput);
 
-        while (toDeck == null){
+        while (toDeck == null || toDeck.getDeckType().equals(DeckType.WASTE)){
             setErrorMessage("invalid target deck, try again:");
             toDeckInput = scanner.nextLine().toLowerCase();
             toDeck = getDeckByInput(gameState, toDeckInput);

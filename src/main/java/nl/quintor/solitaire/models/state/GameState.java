@@ -112,16 +112,15 @@ public final class GameState {
     public ArrayList<Card> getCardsFromDeck(Deck deck, int amount){
         ArrayList<Card> cards = new ArrayList<>();
 
-        for (int i = 0; i <= amount - 1; i++){
-            if (!deck.isEmpty() && deck.size() >= amount){
-                if (deck.getDeckType() == DeckType.STOCK){
-                    cards.add(deck.get(0));
-                    deck.remove(0);
-                }
-                else {
-                    cards.add(deck.get(deck.size()-1));
-                    deck.remove(deck.size()-1);
-                }
+        if (!deck.isEmpty() && deck.size() >= amount){
+            if (deck.getDeckType() == DeckType.STOCK){
+                cards.addAll(deck.subList(0, amount));
+                deck.removeAll(deck.subList(0, amount));
+            }
+            else {
+                Collections.reverse(deck);
+                cards.addAll(deck.subList(0, amount));
+                deck.removeAll(deck.subList(0, amount));
             }
         }
 
