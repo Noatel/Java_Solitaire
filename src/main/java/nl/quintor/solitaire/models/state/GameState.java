@@ -114,8 +114,14 @@ public final class GameState {
 
         for (int i = 0; i <= amount - 1; i++){
             if (!deck.isEmpty()){
-                cards.add(deck.get(0));
-                deck.remove(0);
+                if (deck.getDeckType() == DeckType.STOCK){
+                    cards.add(deck.get(0));
+                    deck.remove(0);
+                }
+                else {
+                    cards.add(deck.get(deck.size()-1));
+                    deck.remove(deck.size()-1);
+                }
             }
         }
 

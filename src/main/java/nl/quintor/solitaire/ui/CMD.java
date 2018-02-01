@@ -3,6 +3,7 @@ package nl.quintor.solitaire.ui;
 import nl.quintor.solitaire.game.moves.Move;
 import nl.quintor.solitaire.models.card.Card;
 import nl.quintor.solitaire.models.deck.Deck;
+import nl.quintor.solitaire.models.deck.DeckType;
 import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.game.moves.Quit;
 import nl.quintor.solitaire.Main;
@@ -98,7 +99,7 @@ public class CMD implements UI {
         System.out.print("\t \t \t ");
 
         for (Deck stackPile : gameState.getStackPiles().values()){
-            Card cardOnTop = !stackPile.isEmpty() ? stackPile.get(0) : null;
+            Card cardOnTop = !stackPile.isEmpty() ? stackPile.get(stackPile.size()-1) : null;
             System.out.print(String.format("%s \t", cardOnTop == null ? "--" : cardOnTop.toShortString()));
         }
 
@@ -134,7 +135,7 @@ public class CMD implements UI {
             break;
 
             case 'm':
-                moveFunction(gameState, inputCommand);
+                moveFunction(gameState);
             break;
 
             case 'h':
@@ -147,13 +148,63 @@ public class CMD implements UI {
             break;
         }
     }
-    void moveFunction (GameState gameState, String input){
+    void moveFunction (GameState gameState){
         this.setMessage("From:");
-        String from = scanner.nextLine().toLowerCase();
+        String fromDeckInput = scanner.nextLine().toLowerCase();
+        Deck fromDeck = getDeckByInput(gameState, fromDeckInput);
 
-        switch (from.charAt(0)){
+        while (fromDeck == null){
+            setErrorMessage("invalid deck, try again:");
+            fromDeckInput = scanner.nextLine().toLowerCase();
+            fromDeck = getDeckByInput(gameState, fromDeckInput);
+        }
+
+        String rowInput = "";
+
+        if (fromDeck.getDeckType().equals(DeckType.COLUMN)){
+            setMessage("Row:");
+            rowInput = scanner.nextLine().toLowerCase();
+
+            while (rowInput.isEmpty() || rowInput.charAt(0) != 'r' || Integer.parseInt(rowInput.replace("r", "")) < 0 && Integer.parseInt(rowInput.replace("r", "")) > 13){
+                setErrorMessage("invalid row number, try again");
+                rowInput = scanner.nextLine().toLowerCase();
+            }
+        }
+
+        setMessage("To:");
+
+        String toDeckInput = scanner.nextLine().toLowerCase();
+        Deck toDeck = getDeckByInput(gameState, toDeckInput);
+
+        while (toDeck == null){
+            setErrorMessage("invalid target deck, try again:");
+            toDeckInput = scanner.nextLine().toLowerCase();
+            toDeck = getDeckByInput(gameState, toDeckInput);
+        }
+
+        if (rowInput.isEmpty()) {
+            toDeck.addAll(gameState.getCardsFromDeck(fromDeck, 1));
+        }
+        else {
+            // code for multiple rows
+        }
+    }
+
+    Deck getDeckByInput(GameState gameState, String input){
+        if (input == null || input.isEmpty()){
+            return null;
+        }
+
+        switch (input.charAt(0)){
             case 'w':
+                return gameState.getWaste();
+            case 's':
+                return gameState.getStackPiles().get(input.replace("s",""));
+            case 'c':
+                return gameState.getColumns().get(input.replace("c",""));
 
+            default:
+                return null;
         }
     }
 
