@@ -186,7 +186,9 @@ public class CMD implements UI {
             toDeck.addAll(gameState.getCardsFromDeck(fromDeck, 1));
         }
         else {
-            // code for multiple rows
+            int rowNumber = Integer.parseInt(rowInput.replace("r", "")) - 1;
+            int amount = fromDeck.size() - rowNumber;
+            toDeck.addAll(gameState.getCardsFromDeck(fromDeck, amount, rowNumber));
         }
     }
 

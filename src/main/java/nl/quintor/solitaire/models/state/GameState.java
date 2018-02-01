@@ -113,7 +113,7 @@ public final class GameState {
         ArrayList<Card> cards = new ArrayList<>();
 
         for (int i = 0; i <= amount - 1; i++){
-            if (!deck.isEmpty()){
+            if (!deck.isEmpty() && deck.size() >= amount){
                 if (deck.getDeckType() == DeckType.STOCK){
                     cards.add(deck.get(0));
                     deck.remove(0);
@@ -123,6 +123,18 @@ public final class GameState {
                     deck.remove(deck.size()-1);
                 }
             }
+        }
+
+        return cards;
+    }
+
+    public ArrayList<Card> getCardsFromDeck(Deck deck, int amount, int startingIndex){
+        ArrayList<Card> cards = new ArrayList<>();
+
+        if (!deck.isEmpty() && deck.size() >= startingIndex + amount){
+            List<Card> targetedCards = deck.subList(startingIndex, amount + startingIndex);
+            cards.addAll(targetedCards);
+            deck.removeAll(targetedCards);
         }
 
         return cards;
