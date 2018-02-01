@@ -2,6 +2,8 @@ package nl.quintor.solitaire.ui;
 
 import nl.quintor.solitaire.game.moves.Move;
 import nl.quintor.solitaire.models.card.Card;
+import nl.quintor.solitaire.models.card.Rank;
+import nl.quintor.solitaire.models.card.Suit;
 import nl.quintor.solitaire.models.deck.Deck;
 import nl.quintor.solitaire.models.deck.DeckType;
 import nl.quintor.solitaire.models.state.GameState;
@@ -81,11 +83,7 @@ public class CMD implements UI {
     }
 
     private void displayHelp() {
-        info = "\nHow do i move a Card \n" +
-               "If you want to move a card, first you need to enter the m to move a card\n" +
-               "After you enter the M into the commandline you need to select a card that you want to move \n" +
-               "";
-
+        System.out.println("asdf");
     }
 
     private void displayHeader(GameState gameState) {
@@ -102,7 +100,6 @@ public class CMD implements UI {
             Card cardOnTop = !stackPile.isEmpty() ? stackPile.get(stackPile.size()-1) : null;
             System.out.print(String.format("%s \t", cardOnTop == null ? "--" : cardOnTop.toShortString()));
         }
-
     }
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
@@ -192,7 +189,7 @@ public class CMD implements UI {
         }
     }
 
-    Deck getDeckByInput(GameState gameState, String input){
+    private Deck getDeckByInput(GameState gameState, String input){
         if (input == null || input.isEmpty()){
             return null;
         }
