@@ -52,6 +52,9 @@ public class Main {
 
         while (!gameState.isGameOver()){
             String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
+            if (gameState.isGameWon()){
+                ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
+            }
         }
         /*while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move
