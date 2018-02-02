@@ -83,7 +83,15 @@ public class CMD implements UI {
     }
 
     private void displayHelp() {
-        System.out.println("asdf");
+        info = "\nHow do i move a Card \n" +
+               "If you want to move a card, first you need to enter the m to move a card\n" +
+               "After you enter the M into the commandline you need to select a card that you want to move,\n" +
+               "The cmd is asking: From, meaning from column do you want to move? \n" +
+               "After entering the column for example C1 you need to select the row. \n" +
+               "The command line is asking you for the row, on the left side you see all rows that are available (R1 to R13) \n" +
+               "If you entered your row number you need to move the cards to a specific column, \n" +
+               "The cmd is asking where do you want to move the columns, you enter here the column \n" +
+               "where you want to move the card to\n";
     }
 
     private void displayHeader(GameState gameState) {
@@ -93,6 +101,7 @@ public class CMD implements UI {
         System.out.println("\t \t \t S1 \t S2 \t S3 \t S4");
 
         Deck waste = gameState.getWaste();
+
         System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size()-1).toShortString()));
         System.out.print("\t \t \t ");
 
