@@ -2,23 +2,12 @@ package nl.quintor.solitaire.ui;
 
 import nl.quintor.solitaire.game.moves.Move;
 import nl.quintor.solitaire.models.card.Card;
-import nl.quintor.solitaire.models.card.Rank;
-import nl.quintor.solitaire.models.card.Suit;
 import nl.quintor.solitaire.models.deck.Deck;
-import nl.quintor.solitaire.models.deck.DeckType;
 import nl.quintor.solitaire.models.state.GameState;
-import nl.quintor.solitaire.game.moves.Quit;
-import nl.quintor.solitaire.Main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 import java.io.IOException;
-import java.lang.*;
-
 import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Scanner;
 
 public class CMD implements UI {
 
@@ -83,22 +72,6 @@ public class CMD implements UI {
         System.out.println();
     }
 
-    private void displayHelp() {
-        info = "\nHow do i move a Card \n" +
-               "If you want to move a card, first you need to enter the m to move a card\n" +
-               "After you enter the M into the commandline you need to select a card that you want to move,\n" +
-               "The cmd is asking: From, meaning from column do you want to move? \n" +
-               "After entering the column for example C1 you need to select the row. \n" +
-               "The command line is asking you for the row, on the left side you see all rows that are available (R1 to R13) \n" +
-               "If you entered your row number you need to move the cards to a specific column, \n" +
-               "The cmd is asking where do you want to move the columns, you enter here the column \n" +
-               "where you want to move the card to\n \n \n" +
-               "" +
-               "How do i draw a card from the deck? \n" +
-               "You draw a card from the stock to the waste by pressing the D button.\n" +
-               "After pressing the D key its cycle through all the cards from the stock until its empty \n \n";
-    }
-
     private void displayHeader(GameState gameState) {
         System.out.println(gameState.toString() + "\n");
 
@@ -119,113 +92,8 @@ public class CMD implements UI {
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
         refresh(gameState);
-        gameControls(gameState);
 
         return scanner.nextLine();
-    }
-
-    // must be moved to according move class
-    private void gameControls(GameState gameState) throws MoveException {
-        String inputCommand = scanner.nextLine().toLowerCase();
-
-        if (inputCommand.isEmpty()){
-            inputCommand = "-";
-        }
-
-        char commandType = inputCommand.charAt(0);
-
-        switch (commandType) {
-            case 'd':
-                deckMove.apply(gameState);
-            break;
-
-            case 'q':
-                Quit quit = new Quit();
-                System.out.println(quit.apply(gameState));
-                quit.apply(gameState);
-                break;
-
-            case 'm':
-                moveFunction(gameState);
-                break;
-
-            case 'h':
-                displayHelp();
-                break;
-
-            default:
-                System.out.println("Please try a valid command, press H for help.");
-                gameControls(gameState);
-                break;
-        }
-    }
-
-    // must be moved to move class
-    void moveFunction (GameState gameState){
-        this.setMessage("From:");
-        String fromDeckInput = scanner.nextLine().toLowerCase();
-        Deck fromDeck = getDeckByInput(gameState, fromDeckInput);
-
-        while (fromDeck == null) {
-            setErrorMessage("invalid deck, try again:");
-            fromDeckInput = scanner.nextLine().toLowerCase();
-            fromDeck = getDeckByInput(gameState, fromDeckInput);
-        }
-
-        String rowInput = "";
-
-        if (fromDeck.getDeckType().equals(DeckType.COLUMN)) {
-            setMessage("Row:");
-            rowInput = scanner.nextLine().toLowerCase();
-
-            while (rowInput.isEmpty() || rowInput.charAt(0) != 'r' || Integer.parseInt(rowInput.replace("r", "")) < 0 && Integer.parseInt(rowInput.replace("r", "")) > 13) {
-                setErrorMessage("invalid row number, try again");
-                rowInput = scanner.nextLine().toLowerCase();
-            }
-        }
-
-        setMessage("To:");
-
-        String toDeckInput = scanner.nextLine().toLowerCase();
-        Deck toDeck = getDeckByInput(gameState, toDeckInput);
-
-        while (toDeck == null || toDeck.getDeckType().equals(DeckType.WASTE)) {
-            setErrorMessage("invalid target deck, try again:");
-            toDeckInput = scanner.nextLine().toLowerCase();
-            toDeck = getDeckByInput(gameState, toDeckInput);
-        }
-
-        if (rowInput.isEmpty()) {
-            toDeck.addAll(gameState.getCardsFromDeck(fromDeck, 1));
-        } else {
-            int rowNumber = Integer.parseInt(rowInput.replace("r", "")) - 1;
-            int amount = fromDeck.size() - rowNumber;
-            toDeck.addAll(gameState.getCardsFromDeck(fromDeck, amount, rowNumber));
-        }
-    }
-
-    private Deck getDeckByInput(GameState gameState, String input) {
-        if (input == null || input.isEmpty()) {
-            return null;
-        }
-
-        switch (input.charAt(0)) {
-            case 'w':
-                return gameState.getWaste();
-            case 's':
-                return gameState.getStackPiles().get(input.replace("s", ""));
-            case 'c':
-                return gameState.getColumns().get(input.replace("c", ""));
-
-            default:
-                return null;
-        }
-    }
-
-    private void checkWon(GameState gameState){
-        if (gameState.getStock().isEmpty() && gameState.getWaste().isEmpty() && gameState.getColumns().isEmpty()){
-            gameState.setGameWon(true);
-        }
     }
 
     private static void clearScreen() {
