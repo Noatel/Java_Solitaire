@@ -12,25 +12,24 @@ import java.util.Scanner;
 public class CMD implements UI {
 
     private Scanner scanner = new Scanner(System.in);
-    private Move deckMove = new DeckMove();
+    private String message = "";
+    private String errorMessage = "";
 
     public void setMessage(String message) {
-        System.out.println(message);
+        this.message = message;
     }
 
     public void setErrorMessage(String message) {
-        System.out.println(message.toUpperCase());
+        this.errorMessage = message;
     }
-
 
     public void refresh(GameState gameState) {
         clearScreen();
         displayHeader(gameState);
         displayColumns(gameState);
         displayControls();
-        System.out.println(info);
-        checkWon(gameState);
-
+        System.out.println(this.message);
+        System.out.println(errorMessage.toUpperCase());
     }
 
     private void displayControls() {
