@@ -64,6 +64,9 @@ public class CardMove implements Move {
             toDeck.addAll(gameState.getCardsFromDeck(fromDeck, amount, rowNumber));
         }
 
+//        gameState.remember();
+//          System.out.println(fromDeckInput);
+//        System.out.println(gameState.getMoves());
         return "Moved card(s)";
     }
 
