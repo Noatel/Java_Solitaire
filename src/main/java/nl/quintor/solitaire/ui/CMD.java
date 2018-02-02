@@ -23,10 +23,12 @@ public class CMD implements UI {
         this.errorMessage = message;
     }
 
+
     public void refresh(GameState gameState) {
         clearScreen();
         displayHeader(gameState);
         displayColumns(gameState);
+        checkWon(gameState);
         displayControls();
         System.out.println(this.message);
         System.out.println(errorMessage.toUpperCase());
@@ -79,7 +81,7 @@ public class CMD implements UI {
 
         Deck waste = gameState.getWaste();
 
-        System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size()-1).toShortString()));
+        System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size() - 1).toShortString()));
         System.out.print("\t \t \t ");
 
         for (Deck stackPile : gameState.getStackPiles().values()) {
@@ -93,6 +95,12 @@ public class CMD implements UI {
         refresh(gameState);
 
         return scanner.nextLine();
+    }
+
+    private void checkWon(GameState gameState) {
+        if (gameState.getStock().isEmpty() && gameState.getWaste().isEmpty() && gameState.getColumns().isEmpty()) {
+            gameState.setGameWon(true);
+        }
     }
 
     private static void clearScreen() {
