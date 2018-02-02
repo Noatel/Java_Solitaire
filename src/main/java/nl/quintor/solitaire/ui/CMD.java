@@ -34,6 +34,13 @@ public class CMD implements UI {
         System.out.println(errorMessage.toUpperCase());
     }
 
+    public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
+        refresh(gameState);
+        message = "";
+        errorMessage = "";
+        return scanner.nextLine();
+    }
+
     private void displayControls() {
         String controls = "M = Move | D = Draw | H = Help | Q = Quit";
 
@@ -89,13 +96,6 @@ public class CMD implements UI {
             System.out.print(String.format("%s \t", cardOnTop == null ? "--" : cardOnTop.toShortString()));
         }
         System.out.print("\n");
-    }
-
-    public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
-        refresh(gameState);
-        message = "";
-        errorMessage = "";
-        return scanner.nextLine();
     }
 
     private void checkWon(GameState gameState) {
