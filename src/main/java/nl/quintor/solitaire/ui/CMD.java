@@ -41,6 +41,7 @@ public class CMD implements UI {
         displayControls();
         System.out.println(info);
         checkWon(gameState);
+
     }
 
     private void displayControls() {
