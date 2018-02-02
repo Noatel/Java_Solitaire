@@ -91,7 +91,8 @@ public class CMD implements UI {
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
         refresh(gameState);
-
+        message = "";
+        errorMessage = "";
         return scanner.nextLine();
     }
 
