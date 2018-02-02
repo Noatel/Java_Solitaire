@@ -1,13 +1,7 @@
 package nl.quintor.solitaire;
 
-import nl.quintor.solitaire.game.moves.Move;
-import nl.quintor.solitaire.game.moves.Quit;
+import nl.quintor.solitaire.game.moves.*;
 import nl.quintor.solitaire.game.moves.ex.MoveException;
-import nl.quintor.solitaire.models.card.Card;
-import nl.quintor.solitaire.models.card.Rank;
-import nl.quintor.solitaire.models.card.Suit;
-import nl.quintor.solitaire.models.deck.Deck;
-import nl.quintor.solitaire.models.deck.DeckType;
 import nl.quintor.solitaire.models.state.GameState;
 import nl.quintor.solitaire.ui.CMD;
 import nl.quintor.solitaire.ui.UI;
@@ -39,8 +33,8 @@ public class Main {
         // initialize the GameState, UI and all possible moves
         UI ui = new CMD();
         GameState gameState = new GameState();
-        List<String> keys = Arrays.asList("Q");
-        List<Move> moves = Arrays.asList(new Quit());
+        List<String> keys = Arrays.asList("Q", "D", "M", "H");
+        List<Move> moves = Arrays.asList(new Quit(), new DeckMove(), new CardMove(), new HelpMove());
         HashMap<String, Move> possibleMoves = new HashMap<>();
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
 
@@ -49,11 +43,7 @@ public class Main {
         System.out.println(gameState);
 
         // game loop
-
-        while (!gameState.isGameOver()){
-            String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
-        }
-        /*while (!gameState.isGameOver()) {
+        while (!gameState.isGameOver()) {
             // show gamestate to the player and ask for next move
             String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
 
@@ -71,8 +61,7 @@ public class Main {
         if (gameState.isGameWon()){
             ui.setMessage("Congratulations, you beat the game!!! " + gameState.toString());
         }
-        */
-        //ui.refresh(gameState);
+
         ui.refresh(gameState);
     }
 }

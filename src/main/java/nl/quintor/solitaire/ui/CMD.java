@@ -1,6 +1,8 @@
 package nl.quintor.solitaire.ui;
 
+import nl.quintor.solitaire.game.moves.DeckMove;
 import nl.quintor.solitaire.game.moves.Move;
+import nl.quintor.solitaire.game.moves.ex.MoveException;
 import nl.quintor.solitaire.models.card.Card;
 import nl.quintor.solitaire.models.card.Rank;
 import nl.quintor.solitaire.models.card.Suit;
@@ -23,7 +25,7 @@ import java.util.regex.Pattern;
 public class CMD implements UI {
 
     private Scanner scanner = new Scanner(System.in);
-    private String info = "";
+    private Move deckMove = new DeckMove();
 
     public void setMessage(String message) {
         System.out.println(message);
@@ -39,7 +41,6 @@ public class CMD implements UI {
         displayHeader(gameState);
         displayColumns(gameState);
         displayControls();
-        System.out.println(info);
     }
 
     private void displayControls() {
@@ -117,25 +118,19 @@ public class CMD implements UI {
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
         refresh(gameState);
-        gameControls(gameState);
 
-        return "test";
+        return scanner.nextLine();
     }
-    private void gameControls(GameState gameState) {
+
+    // must be moved to according move class
+    private void gameControls(GameState gameState) throws MoveException {
         String inputCommand = scanner.nextLine().toLowerCase();
 
         char commandType = inputCommand.charAt(0);
 
         switch (commandType) {
             case 'd':
-                // if stock is empty, put waste back in stock
-                if (gameState.getStock().isEmpty()){
-                    gameState.getStock().addAll(gameState.getCardsFromDeck(gameState.getWaste(), gameState.getWaste().size()));
-                }
-                else {
-                    // add card from stock to waste
-                    gameState.getWaste().addAll(gameState.getCardsFromDeck(gameState.getStock(), 1));
-                }
+                deckMove.apply(gameState);
             break;
 
             case 'q':
@@ -158,6 +153,8 @@ public class CMD implements UI {
             break;
         }
     }
+
+    // must be moved to move class
     void moveFunction (GameState gameState){
         this.setMessage("From:");
         String fromDeckInput = scanner.nextLine().toLowerCase();
