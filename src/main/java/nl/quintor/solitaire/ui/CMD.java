@@ -91,7 +91,11 @@ public class CMD implements UI {
                "The command line is asking you for the row, on the left side you see all rows that are available (R1 to R13) \n" +
                "If you entered your row number you need to move the cards to a specific column, \n" +
                "The cmd is asking where do you want to move the columns, you enter here the column \n" +
-               "where you want to move the card to\n";
+               "where you want to move the card to\n \n \n" +
+               "" +
+               "How do i draw a card from the deck? \n" +
+               "You draw a card from the stock to the waste by pressing the D button.\n" +
+               "After pressing the D key its cycle through all the cards from the stock until its empty \n \n";
     }
 
     private void displayHeader(GameState gameState) {
