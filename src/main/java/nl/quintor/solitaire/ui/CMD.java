@@ -23,10 +23,12 @@ public class CMD implements UI {
         this.errorMessage = message;
     }
 
+
     public void refresh(GameState gameState) {
         clearScreen();
         displayHeader(gameState);
         displayColumns(gameState);
+        checkWon(gameState);
         displayControls();
         System.out.println(this.message);
         System.out.println(errorMessage.toUpperCase());
@@ -50,10 +52,10 @@ public class CMD implements UI {
             System.out.print("R" + i);
 
             // iterate through columns
-            for (Deck column : gameState.getColumns().values()){
+            for (Deck column : gameState.getColumns().values()) {
 
                 // if card is last card in column, display card as visible otherwise invisible
-                if (i <= column.size()){
+                if (i <= column.size()) {
                     Card selectedCard = column.get(i - 1);
 
                     if (!selectedCard.equals(column.get(column.size() - 1))) {
@@ -61,8 +63,7 @@ public class CMD implements UI {
                     } else {
                         System.out.print(String.format("\t%s", selectedCard.toShortString()));
                     }
-                }
-                else {
+                } else {
                     // card was not found in oolumn, display just a tab
                     System.out.print("\t");
                 }
@@ -73,20 +74,21 @@ public class CMD implements UI {
     }
 
     private void displayHeader(GameState gameState) {
-        System.out.println(gameState.toString());
+        System.out.println(gameState.toString() + "\n");
 
         System.out.print("Stock: " + gameState.getStock().size());
         System.out.println("\t \t \t S1 \t S2 \t S3 \t S4");
 
         Deck waste = gameState.getWaste();
 
-        System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size()-1).toShortString()));
+        System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size() - 1).toShortString()));
         System.out.print("\t \t \t ");
 
-        for (Deck stackPile : gameState.getStackPiles().values()){
-            Card cardOnTop = !stackPile.isEmpty() ? stackPile.get(stackPile.size()-1) : null;
+        for (Deck stackPile : gameState.getStackPiles().values()) {
+            Card cardOnTop = !stackPile.isEmpty() ? stackPile.get(stackPile.size() - 1) : null;
             System.out.print(String.format("%s \t", cardOnTop == null ? "--" : cardOnTop.toShortString()));
         }
+        System.out.print("\n");
     }
 
     public String refreshAndRequestMove(GameState gameState, Collection<Move> moves) {
@@ -94,6 +96,12 @@ public class CMD implements UI {
         message = "";
         errorMessage = "";
         return scanner.nextLine();
+    }
+
+    private void checkWon(GameState gameState) {
+        if (gameState.getStock().isEmpty() && gameState.getWaste().isEmpty() && gameState.getColumns().isEmpty()) {
+            gameState.setGameWon(true);
+        }
     }
 
     private static void clearScreen() {
