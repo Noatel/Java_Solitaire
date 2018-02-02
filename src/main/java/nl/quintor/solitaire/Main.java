@@ -39,22 +39,22 @@ public class Main {
         for (int i = 0; i<keys.size(); i++) possibleMoves.put(keys.get(i), moves.get(i));
 
 
-        System.out.println("gamestate");
-        System.out.println(gameState);
-
-        // game loop
         while (!gameState.isGameOver()) {
-            // show gamestate to the player and ask for next move
             String playerInput = ui.refreshAndRequestMove(gameState, moves).toUpperCase();
 
-            Move move = possibleMoves
-                .getOrDefault(playerInput.substring(0,1), null)
-                .createInstance(playerInput);
+            if (playerInput.isEmpty()){
+                ui.setErrorMessage("Command can not be empty");
+            }
+            else{
+                Move move = possibleMoves
+                    .getOrDefault(playerInput.substring(0,1), null)
+                    .createInstance(playerInput);
 
-            try{
-                ui.setMessage(move.apply(gameState));
-            } catch (MoveException e){
-                ui.setErrorMessage(e.getMessage());
+                try{
+                    ui.setMessage(move.apply(gameState));
+                } catch (MoveException e){
+                    ui.setErrorMessage(e.getMessage());
+                }
             }
         }
 
