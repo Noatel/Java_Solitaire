@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public class CMD implements UI {
 
     private Scanner scanner = new Scanner(System.in);
-    private String info = "";
+    private Move deckMove = new DeckMove();
 
     public void setMessage(String message) {
         System.out.println(message);
@@ -83,7 +83,19 @@ public class CMD implements UI {
     }
 
     private void displayHelp() {
-        System.out.println("asdf");
+        info = "\nHow do i move a Card \n" +
+               "If you want to move a card, first you need to enter the m to move a card\n" +
+               "After you enter the M into the commandline you need to select a card that you want to move,\n" +
+               "The cmd is asking: From, meaning from column do you want to move? \n" +
+               "After entering the column for example C1 you need to select the row. \n" +
+               "The command line is asking you for the row, on the left side you see all rows that are available (R1 to R13) \n" +
+               "If you entered your row number you need to move the cards to a specific column, \n" +
+               "The cmd is asking where do you want to move the columns, you enter here the column \n" +
+               "where you want to move the card to\n \n \n" +
+               "" +
+               "How do i draw a card from the deck? \n" +
+               "You draw a card from the stock to the waste by pressing the D button.\n" +
+               "After pressing the D key its cycle through all the cards from the stock until its empty \n \n";
     }
 
     private void displayHeader(GameState gameState) {
@@ -93,7 +105,8 @@ public class CMD implements UI {
         System.out.println("\t \t \t S1 \t S2 \t S3 \t S4");
 
         Deck waste = gameState.getWaste();
-        System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size() - 1).toShortString()));
+
+        System.out.print(String.format("Waste: %s", waste.isEmpty() ? "--" : waste.get(waste.size()-1).toShortString()));
         System.out.print("\t \t \t ");
 
         for (Deck stackPile : gameState.getStackPiles().values()) {
@@ -107,10 +120,11 @@ public class CMD implements UI {
         refresh(gameState);
         gameControls(gameState);
 
-        return "test";
+        return scanner.nextLine();
     }
 
-    private void gameControls(GameState gameState) {
+    // must be moved to according move class
+    private void gameControls(GameState gameState) throws MoveException {
         String inputCommand = scanner.nextLine().toLowerCase();
 
         if (inputCommand.isEmpty()){
@@ -121,14 +135,8 @@ public class CMD implements UI {
 
         switch (commandType) {
             case 'd':
-                // if stock is empty, put waste back in stock
-                if (gameState.getStock().isEmpty()) {
-                    gameState.getStock().addAll(gameState.getCardsFromDeck(gameState.getWaste(), gameState.getWaste().size()));
-                } else {
-                    // add card from stock to waste
-                    gameState.getWaste().addAll(gameState.getCardsFromDeck(gameState.getStock(), 1));
-                }
-                break;
+                deckMove.apply(gameState);
+            break;
 
             case 'q':
                 Quit quit = new Quit();
@@ -151,7 +159,8 @@ public class CMD implements UI {
         }
     }
 
-    void moveFunction(GameState gameState) {
+    // must be moved to move class
+    void moveFunction (GameState gameState){
         this.setMessage("From:");
         String fromDeckInput = scanner.nextLine().toLowerCase();
         Deck fromDeck = getDeckByInput(gameState, fromDeckInput);
